@@ -1,0 +1,10 @@
+users:
+  alice:
+    login: alice
+    email: alice@example.com
+  bob:
+    login: bob
+    email: bob@example.com
+  carol:
+    login: carol
+    email: carol@example.com

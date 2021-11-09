@@ -1,0 +1,26 @@
+---
+- name: Create users
+  hosts: cent-node1
+  become: true
+  vars_files:
+    - vars.yaml
+    - passwords.yaml
+
+  tasks:
+    - name: Create user {{ item.key }}
+      user:
+        name: "{{ item.value.login }}"
+        create_home: yes
+        comment: "{{ item.value.email }}"
+        password: "{{ item.value.password | password_hash('sha512') }}"
+        state: present
+        update_password: on_create
+      loop: "{{ users|combine(passwords, recursive=True)|dict2items }}"
+
+
+#    - name: Remove user {{ item.value.login }}
+#      user:
+#        name: "{{ item.value.login }}"
+#        state: absent
+#        remove: yes
+#      loop: "{{ users|dict2items }}"
